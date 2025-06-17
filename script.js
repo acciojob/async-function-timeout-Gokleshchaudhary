@@ -1,23 +1,25 @@
-document.getElementById('messageForm').addEventListener('submit', async function(event) {
+// Function to simulate delay
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Main function to handle the button click
+async function displayMessage(event) {
     event.preventDefault(); // Prevent the default form submission
 
-    const message = document.getElementById('text').value; // Get the message input
-    const delayTime = parseInt(document.getElementById('delay').value); // Get the delay input and convert to number
+    // Retrieve input values
+    const textInput = document.getElementById('text').value;
+    const delayInput = document.getElementById('delay').value;
 
-    // Call the displayMessage function with the delay
-    await displayMessage(message, delayTime);
-});
+    // Convert delay input to number
+    const delayTime = Number(delayInput);
 
-// Define the delay function
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms)); // Create a promise that resolves after ms
+    // Wait for the specified delay
+    await delay(delayTime);
+
+    // Update the output div with the text
+    document.getElementById('output').innerHTML = textInput;
 }
 
-// Define the displayMessage function
-async function displayMessage(message, delayTime) {
-    await delay(delayTime); // Wait for the specified delay
-    document.getElementById('output').innerText = message; // Display the message in the output div
-}
-const delayTime = parseInt(document.getElementById('delay').value); // Changed variable name
-console.log("Message:", message);
-console.log("Delay Time:", delayTime);
+// Add event listener to the form
+document.getElementById('messageForm').addEventListener('submit', displayMessage);
